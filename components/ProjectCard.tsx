@@ -66,7 +66,7 @@ const ProjectCard = ({
 
         <div className="flexCenter gap-3">
           <div className="flexCenter gap-2">
-            <Image src="/hearth.svg" width={13} height={12} alt="heart" />
+            <Image src="/heart.svg" width={13} height={12} alt="heart" />
             <p className="text-sm">{randomLikes}</p>
           </div>
           <div className="flexCenter gap-2">

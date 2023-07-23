@@ -1,19 +1,19 @@
 import { ProjectInterface } from "@/common.types";
-/* import Categories from "@components/Categories";
-import LoadMore from "@components/LoadMore"; */
-import ProjectCard from "@/components/ProjectCard";
+import Categories from "@components/Categories";
+import ProjectCard from "@components/ProjectCard";
 import { fetchAllProjects } from "@/lib/actions";
+import Pagination from "@components/Pagination";
 
-type SearchParams = {
+interface SearchParams {
   category?: string | null;
   endcursor?: string | null;
-};
+}
 
-type Props = {
+interface HomeProps {
   searchParams: SearchParams;
-};
+}
 
-type ProjectSearch = {
+interface ProjectSearch {
   projectSearch: {
     edges: { node: ProjectInterface }[];
     pageInfo: {
@@ -23,13 +23,13 @@ type ProjectSearch = {
       endCursor: string;
     };
   };
-};
+}
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic"; //this means that the page will be regenerated on every request
 export const dynamicParams = true;
 export const revalidate = 0;
 
-const Home = async ({ searchParams: { category, endcursor } }: Props) => {
+const Home = async ({ searchParams: { category, endcursor } }: HomeProps) => {
   const data = (await fetchAllProjects(category, endcursor)) as ProjectSearch;
 
   const projectsToDisplay = data?.projectSearch?.edges || [];
@@ -37,7 +37,7 @@ const Home = async ({ searchParams: { category, endcursor } }: Props) => {
   if (projectsToDisplay.length === 0) {
     return (
       <section className="flexStart flex-col paddings">
-        {/* <Categories /> */}
+        <Categories />
 
         <p className="no-result-text text-center">
           No projects found, go create some first.
@@ -48,7 +48,7 @@ const Home = async ({ searchParams: { category, endcursor } }: Props) => {
 
   return (
     <section className="flexStart flex-col paddings mb-16">
-      {/* <Categories /> */}
+      <Categories />
 
       <section className="projects-grid">
         {projectsToDisplay.map(({ node }: { node: ProjectInterface }) => (
@@ -64,12 +64,12 @@ const Home = async ({ searchParams: { category, endcursor } }: Props) => {
         ))}
       </section>
 
-      {/*   <LoadMore
+      <Pagination
         startCursor={data?.projectSearch?.pageInfo?.startCursor}
         endCursor={data?.projectSearch?.pageInfo?.endCursor}
         hasPreviousPage={data?.projectSearch?.pageInfo?.hasPreviousPage}
         hasNextPage={data?.projectSearch?.pageInfo.hasNextPage}
-      /> */}
+      />
     </section>
   );
 };

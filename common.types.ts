@@ -1,13 +1,13 @@
 import { User, Session } from "next-auth";
 
-export type FormState = {
+export interface FormState {
   title: string;
   description: string;
   image: string;
   liveSiteUrl: string;
   githubUrl: string;
   category: string;
-};
+}
 
 export interface ProjectInterface {
   title: string;
@@ -32,7 +32,7 @@ export interface UserProfile {
   description: string | null;
   avatarUrl: string;
   githubUrl: string | null;
-  linkedInUrl: string | null;
+  linkedinUrl: string | null;
   projects: {
     edges: { node: ProjectInterface }[];
     pageInfo: {
